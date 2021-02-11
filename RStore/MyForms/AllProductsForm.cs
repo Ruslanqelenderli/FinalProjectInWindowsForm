@@ -30,7 +30,7 @@ namespace RStore.MyForms
                 int date = Convert.ToInt32((dateTime - pr.ExpiredDate).TotalDays);
                 if (date == 0)
                 {
-                    pr.Status = Status.Deleted.ToString();
+                    pr.Status = Status.Expired.ToString();
                     context1.SaveChanges();
                 }
             }
