@@ -58,6 +58,7 @@
             // 
             this.txb_LoginPassword.Location = new System.Drawing.Point(99, 120);
             this.txb_LoginPassword.Name = "txb_LoginPassword";
+            this.txb_LoginPassword.PasswordChar = '*';
             this.txb_LoginPassword.Size = new System.Drawing.Size(100, 20);
             this.txb_LoginPassword.TabIndex = 2;
             // 

@@ -1,5 +1,6 @@
 ﻿using RStore.DAL;
 using RStore.DataContext;
+using RStore.Enums;
 using RStore.Models;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace RStore.MyForms
 
 
             SetCategory();
+            GetAllCategory();
         }
         CrudDb crud = new CrudDb();
         private void btn_Add_Click(object sender, EventArgs e)
@@ -39,11 +41,12 @@ namespace RStore.MyForms
                 UserId=MyDatabase.userId,
                 Count=Convert.ToInt32(txb_AddCount.Text),
                 BoughtCount=0,
-                Status="Active"
+                Status=Status.Active.ToString(),
+                ExpiredDate=dtm_ExpiredDate.Value
             };
             Logs logs = new Logs()
             {
-                Status = "Active",
+                Status =Status.Active.ToString(),
                 Id = product.Id,
                 ModifiedDate = DateTime.Now
 
@@ -63,6 +66,7 @@ namespace RStore.MyForms
                 {
                     cmb_CategoryAdd.Items.Add(category.Id + "-" + category.Name);
                     cmb_CategoryUpdate.Items.Add(category.Id + "-" + category.Name);
+                    
                 }
             }
         }
@@ -89,12 +93,59 @@ namespace RStore.MyForms
                                         CategoryName = product.Category.Name,
                                         Description = log.Description,
                                         LogStatus = log.Status,
-                                        ModifiedDate = log.ModifiedDate
-                                    }).Where(x => x.UserId == id).Where(x => x.Status == "Active").ToList();
+                                        ModifiedDate = log.ModifiedDate,
+                                        UserName = product.User.Name
+                                    }).Where(x => x.UserId == id).Where(x => x.Status == Status.Active.ToString()).ToList();
 
                                 
                                 dgv_UserProducts.DataSource = products;
                                 
+            }
+        }
+        public void GetAllCategory()
+        {
+            using (RStoreDataContext rStore = new RStoreDataContext())
+            {
+                var categories = rStore.Categories.ToList();
+                cmb_SearchCategory.DisplayMember = "Name";
+                cmb_SearchCategory.ValueMember = "Id";
+                cmb_SearchCategory.DataSource = categories;
+
+
+            }
+        }
+        public void SearchForCategory(int id)
+        {
+            using (RStoreDataContext context = new RStoreDataContext())
+            {
+                var products = context.Products.Join(
+                                   context.Logs,
+                                   product => product.Id,
+                                   log => log.Product.Id,
+                                   (product, log) => new
+                                   {
+                                       product.Id,
+                                       product.Name,
+                                       product.Price,
+                                       product.Count,
+                                       product.BoughtCount,
+                                       product.Status,
+                                       product.UserId,
+                                       CategoryName = product.Category.Name,
+                                       Description = log.Description,
+                                       LogStatus = log.Status,
+                                       ModifiedDate = log.ModifiedDate,
+                                       UserName = product.User.Name,
+                                       product.CategoryId
+                                       
+                                   }).Where(x => x.CategoryId==id).Where(x => x.Status == Status.Active.ToString()).ToList();
+
+
+                dgv_UserProducts.DataSource = products;
+
+
+
+
             }
         }
 
@@ -141,8 +192,9 @@ namespace RStore.MyForms
                                         CategoryName = product.Category.Name,
                                         Description = log.Description,
                                         LogStatus = log.Status,
-                                        ModifiedDate = log.ModifiedDate
-                                    }).Where(x => x.Name.Contains(key)).Where(x => x.UserId == id).Where(x => x.Status == "Active").ToList();
+                                        ModifiedDate = log.ModifiedDate,
+                                        UserName=product.User.Name
+                                    }).Where(x => x.Name.Contains(key)).Where(x => x.UserId == id).Where(x => x.Status == Status.Active.ToString()).ToList();
 
 
                 dgv_UserProducts.DataSource = products;
@@ -150,7 +202,8 @@ namespace RStore.MyForms
                
             }
         }
-        public void SearchForCategoryName(string key, int id)
+        
+        public void SearchForPrice(string price, int id)
         {
             using (RStoreDataContext context = new RStoreDataContext())
             {
@@ -170,36 +223,9 @@ namespace RStore.MyForms
                                         CategoryName = product.Category.Name,
                                         Description = log.Description,
                                         LogStatus = log.Status,
-                                        ModifiedDate = log.ModifiedDate
-                                    }).Where(x => x.CategoryName.Contains(key)).Where(x => x.UserId == id).Where(x => x.Status == "Active").ToList();
-
-
-                dgv_UserProducts.DataSource = products;
-                
-            }
-        }
-        public void SearchForPrice(double price, int id)
-        {
-            using (RStoreDataContext context = new RStoreDataContext())
-            {
-                var products = context.Products.Join(
-                                    context.Logs,
-                                    product => product.Id,
-                                    log => log.Product.Id,
-                                    (product, log) => new
-                                    {
-                                        product.Id,
-                                        product.Name,
-                                        product.Price,
-                                        product.Count,
-                                        product.BoughtCount,
-                                        product.Status,
-                                        product.UserId,
-                                        CategoryName = product.Category.Name,
-                                        Description = log.Description,
-                                        LogStatus = log.Status,
-                                        ModifiedDate = log.ModifiedDate
-                                    }).Where(x => x.Price == price).Where(x => x.UserId == id).Where(x => x.Status == "Active").ToList();
+                                        ModifiedDate = log.ModifiedDate,
+                                        UserName = product.User.Name
+                                    }).Where(x => x.Price.ToString().Contains(price)).Where(x => x.UserId == id).Where(x => x.Status == Status.Active.ToString()).ToList();
 
 
                 dgv_UserProducts.DataSource = products;
@@ -207,7 +233,7 @@ namespace RStore.MyForms
             }
            
         }
-        public void SearchForCount(int count, int id)
+        public void SearchForCount(string count, int id)
         {
             using (RStoreDataContext context = new RStoreDataContext())
             {
@@ -227,8 +253,9 @@ namespace RStore.MyForms
                                         CategoryName = product.Category.Name,
                                         Description = log.Description,
                                         LogStatus = log.Status,
-                                        ModifiedDate = log.ModifiedDate
-                                    }).Where(x => x.Count == count).Where(x => x.UserId == id).Where(x => x.Status == "Active").ToList();
+                                        ModifiedDate = log.ModifiedDate,
+                                        UserName = product.User.Name
+                                    }).Where(x => x.Count.ToString().Contains(count)).Where(x => x.UserId == id).Where(x => x.Status == Status.Active.ToString()).ToList();
 
 
                 dgv_UserProducts.DataSource = products;
@@ -236,7 +263,7 @@ namespace RStore.MyForms
             }
             
         }
-        public void SearchForBoughtCount(int boughtcount, int id)
+        public void SearchForBoughtCount(string boughtcount, int id)
         {
             using (RStoreDataContext context = new RStoreDataContext())
             {
@@ -256,8 +283,9 @@ namespace RStore.MyForms
                                         CategoryName = product.Category.Name,
                                         Description = log.Description,
                                         LogStatus = log.Status,
-                                        ModifiedDate = log.ModifiedDate
-                                    }).Where(x => x.BoughtCount == boughtcount).Where(x => x.UserId == id).Where(x => x.Status == "Active").ToList();
+                                        ModifiedDate = log.ModifiedDate,
+                                        UserName = product.User.Name
+                                    }).Where(x => x.BoughtCount.ToString().Contains(boughtcount)).Where(x => x.UserId == id).Where(x => x.Status == Status.Active.ToString()).ToList();
 
 
                 dgv_UserProducts.DataSource = products;
@@ -281,7 +309,7 @@ namespace RStore.MyForms
             {
                 if (txb_PriceSearch.Text != "")
                 {
-                    double _price = Convert.ToDouble(txb_PriceSearch.Text);
+                    string _price = txb_PriceSearch.Text;
                     SearchForPrice(_price, MyDatabase.userId);
                 }
                 else
@@ -304,7 +332,7 @@ namespace RStore.MyForms
             {
                 if (txb_CountSearch.Text != "")
                 {
-                    int _count = Convert.ToInt32(txb_CountSearch.Text);
+                    string _count = txb_CountSearch.Text;
                     SearchForCount(_count, MyDatabase.userId);
 
                 }
@@ -321,18 +349,14 @@ namespace RStore.MyForms
             
         }
 
-        private void txb_CategorySearch_TextChanged(object sender, EventArgs e)
-        {
-            SearchForCategoryName(txb_CategorySearch.Text, MyDatabase.userId);
-        }
-
+       
         private void txb_SearchBoughtCount_TextChanged(object sender, EventArgs e)
         {
             try
             {
                 if (txb_SearchBoughtCount.Text != "")
                 {
-                    int _boughtcount = Convert.ToInt32(txb_SearchBoughtCount.Text);
+                    string _boughtcount = txb_SearchBoughtCount.Text;
                     SearchForBoughtCount(_boughtcount, MyDatabase.userId);
                 }
                 else
@@ -357,7 +381,7 @@ namespace RStore.MyForms
                 using(RStoreDataContext context =new RStoreDataContext())
                 {
                     var product = context.Products.FirstOrDefault(x => x.Id == id);
-                    product.Status = "Deleted";
+                    product.Status = Status.Deleted.ToString();
                     context.SaveChanges();
                     GetAllUserProduct(MyDatabase.userId);
 
@@ -401,6 +425,9 @@ namespace RStore.MyForms
             }
         }
 
-        
+        private void cmb_SearchCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SearchForCategory(Convert.ToInt32(cmb_SearchCategory.SelectedValue));
+        }
     }
 }

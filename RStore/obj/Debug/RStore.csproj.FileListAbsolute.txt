@@ -47,3 +47,5 @@ C:\Users\User\Desktop\Error-master\RStore\obj\Debug\RStore.pdb
 C:\Users\User\Desktop\Error-master\RStore\obj\Debug\RStore.MyForms.AdminAllProducts.resources
 C:\Users\User\Desktop\Error-master\RStore\obj\Debug\RStore.MyForms.AdminReports.resources
 C:\Users\User\Desktop\Error-master\RStore\obj\Debug\RStore.Migrations.Logs.resources
+C:\Users\User\Desktop\Error-master\RStore\obj\Debug\RStore.Migrations.Validation.resources
+C:\Users\User\Desktop\Error-master\RStore\obj\Debug\RStore.Migrations.ExpiredDate.resources

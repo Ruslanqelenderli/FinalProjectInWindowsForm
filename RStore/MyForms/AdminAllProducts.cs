@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using RStore.Enums;
 
 namespace RStore.MyForms
 {
@@ -53,7 +54,7 @@ namespace RStore.MyForms
                        product.Status,
                        product.UserId,
                        CategoryName = product.Category.Name
-                   }).Where(x=>x.Status=="Active").ToList();
+                   }).Where(x=>x.Status== Status.Active.ToString()).ToList();
 
                 dgv_AdminProducts.DataSource = products;
             }
@@ -73,7 +74,7 @@ namespace RStore.MyForms
                 UserId =2,
                 Count = Convert.ToInt32(txb_AddCount.Text),
                 BoughtCount = 0,
-                Status = "Active",
+                Status = Status.Active.ToString(),
                 
                 
             };
@@ -104,7 +105,7 @@ namespace RStore.MyForms
                        x.Status,
                        x.UserId,
                        CategoryName = x.Category.Name
-                   }).Where(x => x.Name.Contains(key)).Where(x => x.Status == "Active").ToList();
+                   }).Where(x => x.Name.Contains(key)).Where(x => x.Status == Status.Active.ToString()).ToList();
 
                 dgv_AdminProducts.DataSource = products;
             }
@@ -128,7 +129,7 @@ namespace RStore.MyForms
                        x.Status,
                        x.UserId,
                        CategoryName = x.Category.Name
-                   }).Where(x => x.UserName.Contains(key)).Where(x => x.Status == "Active").ToList();
+                   }).Where(x => x.UserName.Contains(key)).Where(x => x.Status == Status.Active.ToString()).ToList();
 
                 dgv_AdminProducts.DataSource = products;
             }
@@ -152,12 +153,12 @@ namespace RStore.MyForms
                        x.Status,
                        x.UserId,
                        CategoryName = x.Category.Name
-                   }).Where(x => x.CategoryName.Contains(key)).Where(x => x.Status == "Active").ToList();
+                   }).Where(x => x.CategoryName.Contains(key)).Where(x => x.Status == Status.Active.ToString()).ToList();
 
                 dgv_AdminProducts.DataSource = products;
             }
         }
-        public void SearchForPrice(double price)
+        public void SearchForPrice(string price)
         {
             using (RStoreDataContext rStore = new RStoreDataContext())
             {
@@ -176,12 +177,12 @@ namespace RStore.MyForms
                        x.Status,
                        x.UserId,
                        CategoryName = x.Category.Name
-                   }).Where(x => x.Price==price).Where(x => x.Status == "Active").ToList();
+                   }).Where(x => x.Price.ToString().Contains(price)).Where(x => x.Status == Status.Active.ToString()).ToList();
 
                 dgv_AdminProducts.DataSource = products;
             }
         }
-        public void SearchForCount(int count)
+        public void SearchForCount(string count)
         {
             using (RStoreDataContext rStore = new RStoreDataContext())
             {
@@ -200,12 +201,12 @@ namespace RStore.MyForms
                        x.Status,
                        x.UserId,
                        CategoryName = x.Category.Name
-                   }).Where(x => x.Count == count).Where(x => x.Status == "Active").ToList();
+                   }).Where(x => x.Count.ToString().Contains(count)).Where(x => x.Status == Status.Active.ToString()).ToList();
 
                 dgv_AdminProducts.DataSource = products;
             }
         }
-        public void SearchForBoughtCount(int boughtcount)
+        public void SearchForBoughtCount(string boughtcount)
         {
             using (RStoreDataContext rStore = new RStoreDataContext())
             {
@@ -224,7 +225,7 @@ namespace RStore.MyForms
                        x.Status,
                        x.UserId,
                        CategoryName = x.Category.Name
-                   }).Where(x => x.BoughtCount == boughtcount).Where(x => x.Status == "Active").ToList();
+                   }).Where(x => x.BoughtCount.ToString().Contains(boughtcount)).Where(x => x.Status == Status.Active.ToString()).ToList();
 
                 dgv_AdminProducts.DataSource = products;
             }
@@ -250,7 +251,7 @@ namespace RStore.MyForms
             {
                 if (txb_PriceSearch.Text != "")
                 {
-                    double price = Convert.ToDouble(txb_PriceSearch.Text);
+                    string price = txb_PriceSearch.Text;
                     SearchForPrice(price);
                 }
                 else
@@ -272,7 +273,7 @@ namespace RStore.MyForms
             {
                 if (txb_CountSearch.Text != "")
                 {
-                    int count = Convert.ToInt32(txb_CountSearch.Text);
+                    string count = txb_CountSearch.Text;
                     SearchForCount(count);
 
                 }
@@ -294,7 +295,7 @@ namespace RStore.MyForms
             {
                 if (txb_SearchBoughtCount.Text != "")
                 {
-                    int boughtcount = Convert.ToInt32(txb_SearchBoughtCount.Text);
+                    string boughtcount = txb_SearchBoughtCount.Text;
                     SearchForBoughtCount(boughtcount);
 
                 }
@@ -329,22 +330,7 @@ namespace RStore.MyForms
             txb_UpdateName.Text = dgv_AdminProducts.CurrentRow.Cells[1].Value.ToString();
             txb_UpdatePrice.Text = dgv_AdminProducts.CurrentRow.Cells[4].Value.ToString();
             txb_UpdateCount.Text = dgv_AdminProducts.CurrentRow.Cells[5].Value.ToString();
-            /*int id = 0;
-
-            using(RStoreDataContext context=new RStoreDataContext())
-            {
-                string categoryname = dgv_UserProducts.CurrentRow.Cells[7].Value.ToString();
-                 Category category = context.Categories.Where(c => c.Name == categoryname).FirstOrDefault();
-                id = category.Id;
-            };
-            
-            txb_NameUpdate.Text = dgv_UserProducts.CurrentRow.Cells[1].Value.ToString();
-            txb_PriceUpdate.Text = dgv_UserProducts.CurrentRow.Cells[2].Value.ToString();
-            txb_CountUpdate.Text = dgv_UserProducts.CurrentRow.Cells[3].Value.ToString();
-            cmb_CategoryUpdate.Text = $"{id}-{dgv_UserProducts.CurrentRow.Cells[7].Value.ToString()}";
-            
-             */
-
+           
         }
 
         private void btn_AdminUpdate_Click(object sender, EventArgs e)
@@ -356,7 +342,7 @@ namespace RStore.MyForms
                 Logs logs = new Logs()
                 {
                     ProductId = Convert.ToInt32(dgv_AdminProducts.CurrentRow.Cells[0].Value),
-                    Status = "Updated",
+                    Status = Status.Updated.ToString(),
                     Description = txb_Description.Text,
                     ModifiedDate = DateTime.Now
                     
@@ -371,7 +357,7 @@ namespace RStore.MyForms
                     products.Name = txb_UpdateName.Text;
                     products.Price = Convert.ToDouble(txb_UpdatePrice.Text);
                     products.Count = Convert.ToInt32(txb_UpdateCount.Text);
-                    products.Status = "Active";
+                    products.Status = Status.Active.ToString();
                     products.CategoryId = Convert.ToInt32(cmb_UpdateCategory.Text.Split('-')[0]);
                     context.Logs.Add(logs);
                     context.SaveChanges();
@@ -397,7 +383,7 @@ namespace RStore.MyForms
                 {
                     Logs logs = new Logs()
                     {
-                        Status = "Deleted",
+                        Status = Status.Deleted.ToString(),
                         ProductId = id,
                         Description = txb_Description.Text,
                         ModifiedDate = DateTime.Now
@@ -407,7 +393,7 @@ namespace RStore.MyForms
                     {
                         context.Logs.Add(logs);
                         var products = context.Products.Where(x => x.Id == id).FirstOrDefault();
-                        products.Status = "Deleted";
+                        products.Status = Status.Deleted.ToString();
                         context.SaveChanges();
                         MessageBox.Show("Deleted");
                         GetAllProducts();

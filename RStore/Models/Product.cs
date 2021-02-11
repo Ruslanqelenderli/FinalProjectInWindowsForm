@@ -19,6 +19,7 @@ namespace RStore.Models
         public  string Status { get; set; }
         public int Count { get; set; }
         public int BoughtCount { get; set; }
+        public DateTime ExpiredDate { get; set; }
 
     }
 }

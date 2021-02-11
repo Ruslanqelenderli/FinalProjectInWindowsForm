@@ -53,7 +53,6 @@
             this.txb_NameUpdate = new System.Windows.Forms.TextBox();
             this.txb_CountSearch = new System.Windows.Forms.TextBox();
             this.btn_Delete = new System.Windows.Forms.Button();
-            this.txb_CategorySearch = new System.Windows.Forms.TextBox();
             this.cmb_CategoryAdd = new System.Windows.Forms.ComboBox();
             this.cmb_CategoryUpdate = new System.Windows.Forms.ComboBox();
             this.lbl_CategoryAdd = new System.Windows.Forms.Label();
@@ -62,6 +61,9 @@
             this.btn_AllProducts = new System.Windows.Forms.Button();
             this.txb_SearchBoughtCount = new System.Windows.Forms.TextBox();
             this.lbl_BoughtCountSearch = new System.Windows.Forms.Label();
+            this.lbl_ExpiredDate = new System.Windows.Forms.Label();
+            this.dtm_ExpiredDate = new System.Windows.Forms.DateTimePicker();
+            this.cmb_SearchCategory = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_UserProducts)).BeginInit();
             this.SuspendLayout();
             // 
@@ -115,7 +117,7 @@
             // 
             // btn_Add
             // 
-            this.btn_Add.Location = new System.Drawing.Point(36, 490);
+            this.btn_Add.Location = new System.Drawing.Point(39, 540);
             this.btn_Add.Name = "btn_Add";
             this.btn_Add.Size = new System.Drawing.Size(75, 23);
             this.btn_Add.TabIndex = 6;
@@ -278,14 +280,6 @@
             this.btn_Delete.UseVisualStyleBackColor = true;
             this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
             // 
-            // txb_CategorySearch
-            // 
-            this.txb_CategorySearch.Location = new System.Drawing.Point(33, 208);
-            this.txb_CategorySearch.Name = "txb_CategorySearch";
-            this.txb_CategorySearch.Size = new System.Drawing.Size(100, 20);
-            this.txb_CategorySearch.TabIndex = 29;
-            this.txb_CategorySearch.TextChanged += new System.EventHandler(this.txb_CategorySearch_TextChanged);
-            // 
             // cmb_CategoryAdd
             // 
             this.cmb_CategoryAdd.FormattingEnabled = true;
@@ -356,11 +350,39 @@
             this.lbl_BoughtCountSearch.TabIndex = 37;
             this.lbl_BoughtCountSearch.Text = "Bought Count";
             // 
+            // lbl_ExpiredDate
+            // 
+            this.lbl_ExpiredDate.AutoSize = true;
+            this.lbl_ExpiredDate.Location = new System.Drawing.Point(30, 490);
+            this.lbl_ExpiredDate.Name = "lbl_ExpiredDate";
+            this.lbl_ExpiredDate.Size = new System.Drawing.Size(65, 13);
+            this.lbl_ExpiredDate.TabIndex = 39;
+            this.lbl_ExpiredDate.Text = "ExpiredDate";
+            // 
+            // dtm_ExpiredDate
+            // 
+            this.dtm_ExpiredDate.Location = new System.Drawing.Point(33, 506);
+            this.dtm_ExpiredDate.Name = "dtm_ExpiredDate";
+            this.dtm_ExpiredDate.Size = new System.Drawing.Size(100, 20);
+            this.dtm_ExpiredDate.TabIndex = 40;
+            // 
+            // cmb_SearchCategory
+            // 
+            this.cmb_SearchCategory.FormattingEnabled = true;
+            this.cmb_SearchCategory.Location = new System.Drawing.Point(33, 207);
+            this.cmb_SearchCategory.Name = "cmb_SearchCategory";
+            this.cmb_SearchCategory.Size = new System.Drawing.Size(100, 21);
+            this.cmb_SearchCategory.TabIndex = 41;
+            this.cmb_SearchCategory.SelectedIndexChanged += new System.EventHandler(this.cmb_SearchCategory_SelectedIndexChanged);
+            // 
             // ProductUserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(738, 553);
+            this.ClientSize = new System.Drawing.Size(738, 600);
+            this.Controls.Add(this.cmb_SearchCategory);
+            this.Controls.Add(this.dtm_ExpiredDate);
+            this.Controls.Add(this.lbl_ExpiredDate);
             this.Controls.Add(this.lbl_BoughtCountSearch);
             this.Controls.Add(this.txb_SearchBoughtCount);
             this.Controls.Add(this.btn_AllProducts);
@@ -369,7 +391,6 @@
             this.Controls.Add(this.lbl_CategoryAdd);
             this.Controls.Add(this.cmb_CategoryUpdate);
             this.Controls.Add(this.cmb_CategoryAdd);
-            this.Controls.Add(this.txb_CategorySearch);
             this.Controls.Add(this.btn_Delete);
             this.Controls.Add(this.txb_CountSearch);
             this.Controls.Add(this.txb_NameUpdate);
@@ -430,7 +451,6 @@
         private System.Windows.Forms.TextBox txb_NameUpdate;
         private System.Windows.Forms.TextBox txb_CountSearch;
         private System.Windows.Forms.Button btn_Delete;
-        private System.Windows.Forms.TextBox txb_CategorySearch;
         public System.Windows.Forms.ComboBox cmb_CategoryAdd;
         private System.Windows.Forms.ComboBox cmb_CategoryUpdate;
         private System.Windows.Forms.Label lbl_CategoryAdd;
@@ -439,5 +459,8 @@
         private System.Windows.Forms.Button btn_AllProducts;
         private System.Windows.Forms.TextBox txb_SearchBoughtCount;
         private System.Windows.Forms.Label lbl_BoughtCountSearch;
+        private System.Windows.Forms.Label lbl_ExpiredDate;
+        private System.Windows.Forms.DateTimePicker dtm_ExpiredDate;
+        private System.Windows.Forms.ComboBox cmb_SearchCategory;
     }
 }

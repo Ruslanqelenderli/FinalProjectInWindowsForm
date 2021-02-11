@@ -155,7 +155,7 @@ namespace RStore.MyForms
                 dgv_AdminReports.DataSource = products;
             }
         }
-        public void SearchForPrice(double price)
+        public void SearchForPrice(string price)
         {
             using (RStoreDataContext context = new RStoreDataContext())
             {
@@ -178,11 +178,11 @@ namespace RStore.MyForms
                         Description = log.Description,
                         LogStatus = log.Status,
                         ModifiedDate = log.ModifiedDate
-                    }).Where(c => c.Price==price).ToList();
+                    }).Where(c => c.Price.ToString().Contains(price)).ToList();
                 dgv_AdminReports.DataSource = products;
             }
         }
-        public void SearchForCount(int count)
+        public void SearchForCount(string count)
         {
             using (RStoreDataContext context = new RStoreDataContext())
             {
@@ -205,11 +205,11 @@ namespace RStore.MyForms
                         Description = log.Description,
                         LogStatus = log.Status,
                         ModifiedDate = log.ModifiedDate
-                    }).Where(c => c.Count == count).ToList();
+                    }).Where(c => c.Count.ToString().Contains(count)).ToList();
                 dgv_AdminReports.DataSource = products;
             }
         }
-        public void SearchForBoughtCount(int bouhgtcount)
+        public void SearchForBoughtCount(string bouhgtcount)
         {
             using (RStoreDataContext context = new RStoreDataContext())
             {
@@ -232,7 +232,7 @@ namespace RStore.MyForms
                         Description = log.Description,
                         LogStatus = log.Status,
                         ModifiedDate = log.ModifiedDate
-                    }).Where(c => c.BoughtCount == bouhgtcount).ToList();
+                    }).Where(c => c.BoughtCount.ToString().Contains(bouhgtcount)).ToList();
                
                 dgv_AdminReports.DataSource = products;
             }
@@ -268,7 +268,7 @@ namespace RStore.MyForms
             {
                 if (txb_PriceSearch.Text != "")
                 {
-                    SearchForPrice(Convert.ToDouble(txb_PriceSearch.Text));
+                    SearchForPrice(txb_PriceSearch.Text);
                 }
                 else
                 {
@@ -288,7 +288,7 @@ namespace RStore.MyForms
             {
                 if (txb_SearchCount.Text != "")
                 {
-                    SearchForCount(Convert.ToInt32(txb_SearchCount.Text));
+                    SearchForCount(txb_SearchCount.Text);
                 }
                 else
                 {
@@ -308,7 +308,7 @@ namespace RStore.MyForms
             {
                 if (txb_SearchBoughtCount.Text != "")
                 {
-                    SearchForBoughtCount(Convert.ToInt32(txb_SearchBoughtCount.Text));
+                    SearchForBoughtCount(txb_SearchBoughtCount.Text);
                 }
                 else
                 {

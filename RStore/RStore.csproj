@@ -60,6 +60,8 @@
     <Compile Include="DAL\CrudDb.cs" />
     <Compile Include="DAL\MyDatabase.cs" />
     <Compile Include="DataContext\RStoreDataContext.cs" />
+    <Compile Include="Enums\Role.cs" />
+    <Compile Include="Enums\Status.cs" />
     <Compile Include="Migrations\202102031147144_initial.cs" />
     <Compile Include="Migrations\202102031147144_initial.designer.cs">
       <DependentUpon>202102031147144_initial.cs</DependentUpon>
@@ -71,6 +73,14 @@
     <Compile Include="Migrations\202102051345087_Logs.cs" />
     <Compile Include="Migrations\202102051345087_Logs.designer.cs">
       <DependentUpon>202102051345087_Logs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102101633027_Validation.cs" />
+    <Compile Include="Migrations\202102101633027_Validation.designer.cs">
+      <DependentUpon>202102101633027_Validation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102110244495_ExpiredDate.cs" />
+    <Compile Include="Migrations\202102110244495_ExpiredDate.designer.cs">
+      <DependentUpon>202102110244495_ExpiredDate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -141,6 +151,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102051345087_Logs.resx">
       <DependentUpon>202102051345087_Logs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102101633027_Validation.resx">
+      <DependentUpon>202102101633027_Validation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102110244495_ExpiredDate.resx">
+      <DependentUpon>202102110244495_ExpiredDate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyForms\AdminAllProducts.resx">
       <DependentUpon>AdminAllProducts.cs</DependentUpon>

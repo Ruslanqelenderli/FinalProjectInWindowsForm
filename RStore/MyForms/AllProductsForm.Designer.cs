@@ -53,7 +53,8 @@
             this.dgv_AllProductView.Name = "dgv_AllProductView";
             this.dgv_AllProductView.Size = new System.Drawing.Size(593, 150);
             this.dgv_AllProductView.TabIndex = 0;
-            this.dgv_AllProductView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dgv_AllProductView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_AllProductView_CellClick);
+            
             // 
             // txb_SearchPName
             // 
@@ -199,6 +200,7 @@
             this.Controls.Add(this.dgv_AllProductView);
             this.Name = "AllProductsForm";
             this.Text = "AllProductsForm";
+            this.Load += new System.EventHandler(this.AllProductsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_AllProductView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
